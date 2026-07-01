@@ -3,6 +3,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import LightRays from "@/components/lightrays";
 import Navbar from "@/components/Navbar";
+import { PostHogProvider } from "./providers";
 
 const geist = ({subsets:['latin'],variable:'--font-sans'});
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         <html lang="en" className={cn("font-sans", geist.variable)}>
         {/* 2. Use the exact instance names you defined above */}
         <body className={`${schibstedGrotesk.variable} ${martianMono.variable} min-h-screen antialiased`}>
+        <PostHogProvider>
         <Navbar />
 
         <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
@@ -50,6 +52,7 @@ export default function RootLayout({
         <main>
         {children}
             </main>
+        </PostHogProvider>
 
         </body>
         </html>
