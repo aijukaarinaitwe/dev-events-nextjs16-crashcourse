@@ -22,6 +22,25 @@ function PostHogPageView() {
     return null
 }
 
+function DbTester() {
+    useEffect(() => {
+        fetch('/api/test-db')
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    console.log('🟢 MongoDB connected successfully!');
+                } else {
+                    console.error('🔴 MongoDB connection failed:', data.error);
+                }
+            })
+            .catch((err) => {
+                console.error('🔴 MongoDB connection error:', err);
+            });
+    }, []);
+
+    return null;
+}
+
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
@@ -36,7 +55,9 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
             <Suspense fallback={null}>
                 <PostHogPageView />
             </Suspense>
+            <DbTester />
             {children}
         </PHProvider>
     )
 }
+
