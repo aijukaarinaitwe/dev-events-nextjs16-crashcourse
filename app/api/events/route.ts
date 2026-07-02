@@ -66,10 +66,9 @@ export async function POST(req: NextRequest) {
                     });
 
                     eventData.image = (uploadResult as { secure_url: string }).secure_url;
-                } else if (!eventData.image) {
-                    return NextResponse.json({ message: 'Image file or URL is required' }, { status: 400 });
                 }
-            } catch (formErr) {
+            } catch (formErr: any) {
+                console.error("FormData parser error:", formErr?.message || formErr, formErr?.stack);
                 return NextResponse.json(
                     { message: 'Invalid form data', error: formErr instanceof Error ? formErr.message : 'Parsing failed' },
                     { status: 400 }
@@ -109,6 +108,8 @@ export async function POST(req: NextRequest) {
 
         const createdEvent = await Event.create({
             ...eventData,
+            image: eventData.image || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80',
+            overview: eventData.overview || (eventData.description ? eventData.description.slice(0, 150) + '...' : ''),
             tags: parseArray(eventData.tags),
             agenda: parseArray(eventData.agenda),
         });

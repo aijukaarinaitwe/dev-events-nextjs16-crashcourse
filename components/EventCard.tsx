@@ -14,12 +14,11 @@ const EventCard = ({ title, image, time, slug, location, date}: Props) => {
     return (
         <Link href={`/events/${slug}`} id="event-card">
             <div className="relative w-full h-[300px]">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                     src={image}
                     alt={title}
-                    fill
-                    className="object-cover rounded-lg"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="w-full h-full object-cover rounded-lg"
                 />
             </div>
             <div className="flex flex-row-gap-2">

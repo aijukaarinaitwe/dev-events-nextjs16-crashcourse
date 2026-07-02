@@ -7,11 +7,23 @@ import BookingForm from '@/components/BookingForm';
 
 export const dynamic = 'force-dynamic';
 
-interface PageProps {
+function formatDisplayTime(time: string): string {
+    if (!time) return '';
+    if (/AM|PM/i.test(time)) return time;
+    const match = time.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) return time;
+    const hours = parseInt(match[1], 10);
+    const minutes = match[2];
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = hours % 12 || 12;
+    return `${displayHours}:${minutes} ${ampm}`;
+}
+
+interface CustomPageProps {
     params: Promise<{ slug: string }>;
 }
 
-export default async function EventPage({ params }: PageProps) {
+export default async function EventPage({ params }: CustomPageProps) {
     const { slug } = await params;
 
     await connectDB();
@@ -110,7 +122,7 @@ export default async function EventPage({ params }: PageProps) {
                         </div>
                         <div className="flex-row-gap-2">
                             <Image src="/icons/clock.svg" alt="time" width={14} height={14} style={{ width: 'auto', height: 'auto' }} />
-                            <p>{event.time}</p>
+                            <p>{formatDisplayTime(event.time)}</p>
                         </div>
                     </div>
 

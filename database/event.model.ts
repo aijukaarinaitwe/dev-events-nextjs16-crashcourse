@@ -42,13 +42,11 @@ const EventSchema = new Schema<IEvent>(
         },
         overview: {
             type: String,
-            required: [true, 'Overview is required'],
             trim: true,
             maxlength: [500, 'Overview cannot exceed 500 characters'],
         },
         image: {
             type: String,
-            required: [true, 'Image URL is required'],
             trim: true,
         },
         venue: {
@@ -81,16 +79,11 @@ const EventSchema = new Schema<IEvent>(
         },
         audience: {
             type: String,
-            required: [true, 'Audience is required'],
             trim: true,
         },
         agenda: {
             type: [String],
-            required: [true, 'Agenda is required'],
-            validate: {
-                validator: (v: string[]) => v.length > 0,
-                message: 'At least one agenda item is required',
-            },
+            default: [],
         },
         organizer: {
             type: String,
@@ -99,11 +92,7 @@ const EventSchema = new Schema<IEvent>(
         },
         tags: {
             type: [String],
-            required: [true, 'Tags are required'],
-            validate: {
-                validator: (v: string[]) => v.length > 0,
-                message: 'At least one tag is required',
-            },
+            default: [],
         },
     },
     {
@@ -182,8 +171,6 @@ function normalizeTime(timeString: string): string {
     return `${hours.toString().padStart(2, '0')}:${minutes}`;
 }
 
-// Create unique index on slug for better performance
-EventSchema.index({ slug: 1 }, { unique: true });
 
 // Create compound index for common queries
 EventSchema.index({ date: 1, mode: 1 });
