@@ -16,7 +16,7 @@ const Page = () => {
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in one Place</p>
 
             <Explorebtn />
-            <div className="mt-20 space-y-7">
+            <div id="events" className="mt-20 space-y-7">
                 <h3>Featured Events</h3>
 
                 <ul className="events">

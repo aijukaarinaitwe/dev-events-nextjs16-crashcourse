@@ -26,7 +26,7 @@ export const events = [
     {
         title: "AI in Devtools Hackathon",
         image: "/images/event4.png",
-        slug: "ai-devtools-hackathon",
+        slug: "ai-in-devtools-hackathon",
         location: "New York, NY",
         date: "2026-09-05",
         time: "08:30 AM",
