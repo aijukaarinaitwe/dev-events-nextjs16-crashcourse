@@ -50,7 +50,7 @@ export default function RegisterPage() {
             } else {
                 setSuccess(true);
                 setTimeout(() => {
-                    router.push('/login/');
+                    window.location.href = '/login';
                 }, 2000);
             }
         } catch (err) {

@@ -34,8 +34,7 @@ function LoginFormContent() {
             if (signInErr) {
                 setError(signInErr.message || 'Invalid credentials. Please try again.');
             } else {
-                router.push(redirectUrl);
-                router.refresh();
+                window.location.href = redirectUrl;
             }
         } catch (err) {
             console.error('Login error:', err);
