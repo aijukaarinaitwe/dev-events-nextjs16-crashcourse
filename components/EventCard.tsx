@@ -23,12 +23,13 @@ const EventCard = ({ title, image, time, slug, location, date}: Props) => {
 
             <div className="datetime">
                 <div>
-                    <Image src="/icons/calerndar.svg" alt="time" width={14} height={14} />
+                    <Image src="/icons/calendar.svg" alt="calendar" width={14} height={14} />
+                    <p>{date}</p>
                 </div>
-    <div>
-                        <Image src="/icons/clock.svg" alt="time" width={14} height={14} />
+                <div>
+                    <Image src="/icons/clock.svg" alt="time" width={14} height={14} />
                     <p>{time}</p>
-</div>
+                </div>
             </div>
         </Link>
     )

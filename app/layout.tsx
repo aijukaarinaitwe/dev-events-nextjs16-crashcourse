@@ -1,22 +1,25 @@
-import { Schibsted_Grotesk, Martian_Mono, } from "next/font/google";
+import { Schibsted_Grotesk, Martian_Mono, Geist } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import LightRays from "@/components/lightrays";
 import Navbar from "@/components/Navbar";
 import { PostHogProvider } from "./providers";
 
-const geist = ({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({
+    subsets: ["latin"],
+    variable: "--font-sans",
+});
 
 
 // 1. Initialize fonts with underscores in the import name
 const schibstedGrotesk = Schibsted_Grotesk({
     subsets: ["latin"],
-    variable: "--font-schibsted",
+    variable: "--font-schibsted-grotesk",
 });
 
 const martianMono = Martian_Mono({
     subsets: ["latin"],
-    variable: "--font-martian",
+    variable: "--font-martian-mono",
 });
 
 export default function RootLayout({

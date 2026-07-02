@@ -10,7 +10,7 @@ const Page = () => {
     return (
         <section>
             {/* 2. Fixed spacing issue: added block/inline formatting or container alignment if needed */}
-            <h1 className="text-center">The Hub for Every Dev <br /> Event You Can't Miss!</h1>
+            <h1 className="text-center">The Hub for Every Dev <br /> Event You Can&apos;t Miss!</h1>
 
             {/* 3. FIXED TYPO: "test-center" changed to "text-center" */}
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in one Place</p>

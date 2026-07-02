@@ -7,7 +7,7 @@ export async function GET() {
     try {
         await connectDB();
         return NextResponse.json({ success: true, message: 'Database connected successfully' });
-    } catch (error: any) {
+    } catch (error) {
         return NextResponse.json(
             { success: false, error: error instanceof Error ? error.message : String(error) },
             { status: 500 }

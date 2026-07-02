@@ -15,7 +15,6 @@ type MongooseCache = {
 
 // Extend the global object to include our mongoose cache
 declare global {
-    // eslint-disable-next-line no-var
     var mongoose: MongooseCache | undefined;
 }
 
@@ -25,7 +24,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 if (!global.mongoose) {
     global.mongoose = { conn: null, promise: null };
 }
-let cached = global.mongoose;
+const cached = global.mongoose;
 
 /**
  * Establishes a connection to MongoDB using Mongoose.
@@ -51,9 +50,7 @@ async function connectDB(): Promise<typeof mongoose> {
         };
 
         // Create a new connection promise
-        cached.promise = mongoose.connect(MONGODB_URI, options).then((mongooseInstance) => {
-            return mongooseInstance;
-        });
+        cached.promise = mongoose.connect(MONGODB_URI, options);
     }
 
     try {

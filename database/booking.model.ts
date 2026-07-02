@@ -37,14 +37,12 @@ const BookingSchema = new Schema<IBooking>(
 // ✅ FIX: Explicitly define as DOCUMENT middleware
 // Removed the 'next' parameter entirely
 BookingSchema.pre('save', async function () {
-    const booking = this;
-
-    if (booking.isModified('eventId') || booking.isNew) {
+    if (this.isModified('eventId') || this.isNew) {
         try {
-            const eventExists = await Event.findById(booking.eventId).select('_id');
+            const eventExists = await Event.findById(this.eventId).select('_id');
 
             if (!eventExists) {
-                const error = new Error(`Event with ID ${booking.eventId} does not exist`);
+                const error = new Error(`Event with ID ${this.eventId} does not exist`);
                 error.name = 'ValidationError';
                 throw error; // ✅ Simply throw the error
             }
