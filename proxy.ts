@@ -15,7 +15,7 @@ export async function proxy(request: NextRequest) {
         try {
             const baseUrl = request.nextUrl.origin;
             // Fetch session securely using the local API handler
-            const res = await fetch(`${baseUrl}/api/auth/get-session/`, {
+            const res = await fetch(`${baseUrl}/api/auth/get-session`, {
                 headers: {
                     cookie: request.headers.get("cookie") || ""
                 }

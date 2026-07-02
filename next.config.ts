@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   // Allow network hot-reload connections from local network IP
   allowedDevOrigins: ["50.50.1.42"],
 
-  // 1. Keeps Next.js from throwing errors if paths end with a slash
-  trailingSlash: true,
+  // 1. Resolve Better Auth 404s natively by disabling trailing slashes
+  trailingSlash: false,
 
   // 2. Image Optimization Configuration (Cloudinary)
   images: {
