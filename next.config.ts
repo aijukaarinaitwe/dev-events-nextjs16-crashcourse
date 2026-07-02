@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Allow network hot-reload connections from local network IP
+  allowedDevOrigins: ["50.50.1.42"],
+
   // 1. Keeps Next.js from throwing errors if paths end with a slash
   trailingSlash: true,
 

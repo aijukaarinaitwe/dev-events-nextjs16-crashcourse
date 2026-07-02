@@ -1,10 +1,5 @@
 import mongoose from 'mongoose';
-import dns from 'dns';
 
-// Fallback DNS to resolve MongoDB Atlas SRV records in environments with DNS query restrictions (development only)
-if (process.env.NODE_ENV === 'development' && typeof dns.setServers === 'function') {
-    dns.setServers(['8.8.8.8', '1.1.1.1']);
-}
 
 
 // Define the connection cache type

@@ -140,11 +140,7 @@
     }
 
     #explore-btn {
-        @apply border-dark-200 bg-dark-100 flex w-fit cursor-pointer  rounded-full border px-8 py-3.5 max-sm:w-full text-center;
-
-        a {
-            @apply flex-center gap-2 text-center w-full;
-        }
+        @apply border-dark-200 bg-dark-100 flex-center gap-2 w-fit cursor-pointer  rounded-full border px-8 py-3.5 max-sm:w-full text-center;
     }
 
     header {
@@ -174,9 +170,7 @@
     #event-card {
         @apply flex flex-col gap-3;
 
-        .poster {
-            @apply h-[300px] w-full rounded-lg object-cover;
-        }
+
 
         .title {
             @apply text-[20px] font-semibold line-clamp-1;
@@ -190,7 +184,7 @@
             @apply text-light-200 flex flex-row flex-wrap items-center gap-4;
 
             div {
-                @apply flex flex-row gap-2;
+                @apply flex flex-row items-center gap-2;
             }
         }
     }
@@ -243,7 +237,7 @@
         }
 
         .flex-row-gap-2 {
-            @apply flex flex-row gap-2;
+            @apply flex flex-row items-center gap-2;
         }
     }
 
