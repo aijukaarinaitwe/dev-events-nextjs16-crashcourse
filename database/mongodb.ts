@@ -21,7 +21,7 @@ declare global {
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-// FIX 1: Ensure the global object directly references the exact same mutated object
+// Ensure the global object directly references the exact same mutated object
 if (!global.mongoose) {
     global.mongoose = { conn: null, promise: null };
 }
@@ -40,7 +40,6 @@ async function connectDB(): Promise<typeof mongoose> {
 
     // Return existing connection promise if one is in progress
     if (!cached.promise) {
-        // FIX 2: Move the URI validation to the top of the connection logic
         if (!MONGODB_URI) {
             throw new Error(
                 'Please define the MONGODB_URI environment variable inside .env.local'
