@@ -3,27 +3,66 @@
 import { useState } from 'react';
 import Image from "next/image";
 import Link from "next/link";
+import { useSession, signOut } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const { data: session, isPending } = useSession();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        await signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push('/');
+                    router.refresh();
+                    setIsOpen(false);
+                }
+            }
+        });
+    };
 
     return (
         <header className="glass sticky top-0 z-50">
             <nav className="flex flex-row justify-between items-center mx-auto container sm:px-10 px-5 py-4">
                 <Link href='/' className="logo flex flex-row items-center gap-2">
                     <Image src="/icons/logo.png" alt="logo" width={24} height={24} />
-                    <p className="text-xl font-bold italic max-sm:block">DevEvent</p>
+                    <p className="text-xl font-bold italic max-sm:block text-light-100">DevEvent</p>
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden sm:flex flex-row items-center gap-6 list-none">
-                    <li className="list-none">
-                        <Link href="/events/" className="hover:text-primary transition-colors duration-200">Events</Link>
-                    </li>
-                    <li className="list-none">
-                        <Link href="/events/create/" className="hover:text-primary transition-colors duration-200">Create Event</Link>
-                    </li>
-                </ul>
+                {!isPending && (
+                    <ul className="hidden sm:flex flex-row items-center gap-6 list-none">
+                        <li className="list-none">
+                            <Link href="/events/" className="hover:text-primary transition-colors duration-200 text-sm">Events</Link>
+                        </li>
+                        {session?.user?.role === 'admin' && (
+                            <li className="list-none">
+                                <Link href="/admin/events/" className="hover:text-primary transition-colors duration-200 text-sm text-primary">Admin Panel</Link>
+                            </li>
+                        )}
+                        {session ? (
+                            <li className="list-none">
+                                <button 
+                                    onClick={handleLogout}
+                                    className="text-light-200 hover:text-rose-400 text-sm font-semibold transition-colors duration-200 bg-rose-600/10 hover:bg-rose-600/20 px-3.5 py-1.5 rounded-[6px]"
+                                >
+                                    Logout
+                                </button>
+                            </li>
+                        ) : (
+                            <li className="list-none">
+                                <Link 
+                                    href="/login/" 
+                                    className="bg-primary hover:bg-primary/95 text-black font-semibold px-4.5 py-2 rounded-[6px] transition-all duration-200 text-xs"
+                                >
+                                    Sign In
+                                </Link>
+                            </li>
+                        )}
+                    </ul>
+                )}
 
                 {/* Enterprise Grade Hamburger Toggle */}
                 <button
@@ -49,13 +88,31 @@ const Navbar = () => {
                     >
                         Events
                     </Link>
-                    <Link 
-                        href="/events/create/" 
-                        onClick={() => setIsOpen(false)}
-                        className="text-2xl font-medium hover:text-primary transition-colors duration-200"
-                    >
-                        Create Event
-                    </Link>
+                    {session?.user?.role === 'admin' && (
+                        <Link 
+                            href="/admin/events/" 
+                            onClick={() => setIsOpen(false)}
+                            className="text-2xl font-medium hover:text-primary text-primary transition-colors duration-200"
+                        >
+                            Admin Panel
+                        </Link>
+                    )}
+                    {session ? (
+                        <button 
+                            onClick={handleLogout}
+                            className="text-2xl font-medium text-rose-400 hover:text-rose-300 transition-colors duration-200"
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <Link 
+                            href="/login/" 
+                            onClick={() => setIsOpen(false)}
+                            className="text-2xl font-medium hover:text-primary transition-colors duration-200"
+                        >
+                            Sign In
+                        </Link>
+                    )}
                 </div>
             </nav>
         </header>
@@ -63,4 +120,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 

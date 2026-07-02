@@ -1,15 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSession } from '@/lib/auth-client';
+import Link from 'next/link';
 
 interface BookingFormProps {
     eventId: string;
 }
 
 const BookingForm = ({ eventId }: BookingFormProps) => {
+    const { data: session, isPending } = useSession();
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
+    const [currentPath, setCurrentPath] = useState('');
+
+    useEffect(() => {
+        if (session?.user?.email) {
+            setEmail(session.user.email);
+        }
+        if (typeof window !== 'undefined') {
+            setCurrentPath(window.location.pathname);
+        }
+    }, [session]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -32,7 +45,6 @@ const BookingForm = ({ eventId }: BookingFormProps) => {
             if (res.ok) {
                 setStatus('success');
                 setMessage(data.message || 'Successfully registered!');
-                setEmail('');
             } else {
                 setStatus('error');
                 setMessage(data.message || 'Something went wrong.');
@@ -43,6 +55,29 @@ const BookingForm = ({ eventId }: BookingFormProps) => {
             setMessage('Network error. Please try again.');
         }
     };
+
+    if (isPending) {
+        return (
+            <div id="book-event" className="flex items-center justify-center p-6 bg-dark-100 border border-border-dark rounded-[10px]">
+                <p className="text-light-200 text-sm">Checking authentication...</p>
+            </div>
+        );
+    }
+
+    if (!session) {
+        return (
+            <div id="book-event" className="p-6 bg-dark-100 border border-border-dark rounded-[10px] space-y-4 text-center">
+                <h3>Book this Event</h3>
+                <p className="text-sm text-light-200">You must have an account to register for this event.</p>
+                <Link 
+                    href={`/login?redirect=${encodeURIComponent(currentPath)}`}
+                    className="inline-block bg-primary hover:bg-primary/95 text-black font-semibold px-6 py-2.5 rounded-[6px] transition-all duration-200 text-sm"
+                >
+                    Sign in to Book Event
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div id="book-event">
@@ -63,9 +98,10 @@ const BookingForm = ({ eventId }: BookingFormProps) => {
                             id="email"
                             placeholder="Enter your email to book"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            readOnly
                             required
-                            disabled={status === 'loading'}
+                            disabled
+                            className="cursor-not-allowed opacity-70 bg-dark-200"
                         />
                     </div>
                     
@@ -83,3 +119,4 @@ const BookingForm = ({ eventId }: BookingFormProps) => {
 };
 
 export default BookingForm;
+

@@ -124,7 +124,6 @@ export default function CreateEventPage() {
             const res = await fetch('/api/events/', {
                 method: 'POST',
                 body: formDataPayload
-                // Browser automatically sets Content-Type to multipart/form-data with boundaries when body is FormData
             });
 
             const data = await res.json();
@@ -158,8 +157,6 @@ export default function CreateEventPage() {
                             ⚠️ {error}
                         </div>
                     )}
-
-
 
                     <div className="flex flex-col gap-2">
                         <label htmlFor="title" className="text-sm font-medium text-light-200">
@@ -422,8 +419,8 @@ export default function CreateEventPage() {
             </div>
 
             <div className="text-center">
-                <Link href="/events/" className="text-primary hover:underline font-medium">
-                    ← Back to All Events
+                <Link href="/admin/events/" className="text-primary hover:underline font-medium">
+                    ← Back to Dashboard
                 </Link>
             </div>
         </section>
