@@ -24,18 +24,38 @@ function PostHogPageView() {
 
 function DbTester() {
     useEffect(() => {
-        fetch('/api/test-db')
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
+        let active = true;
+        const testDb = async () => {
+            try {
+                const res = await fetch('/api/test-db');
+                const data = await res.json();
+                if (data.success && active) {
                     console.log('🟢 MongoDB connected successfully!');
-                } else {
+                } else if (active) {
                     console.error('🔴 MongoDB connection failed:', data.error);
                 }
-            })
-            .catch((err) => {
-                console.error('🔴 MongoDB connection error:', err);
-            });
+            } catch (err) {
+                if (active) {
+                    console.warn('🟡 MongoDB connection check failed initially (will retry in 3s)...');
+                    setTimeout(() => {
+                        if (active) {
+                            fetch('/api/test-db')
+                                .then((res) => res.json())
+                                .then((data) => {
+                                    if (data.success && active) {
+                                        console.log('🟢 MongoDB connected successfully after retry!');
+                                    }
+                                })
+                                .catch(() => {});
+                        }
+                    }, 3000);
+                }
+            }
+        };
+        testDb();
+        return () => {
+            active = false;
+        };
     }, []);
 
     return null;
