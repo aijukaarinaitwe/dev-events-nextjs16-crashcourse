@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from '@/lib/auth-client';
@@ -10,6 +10,11 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { data: session, isPending } = useSession();
     const router = useRouter();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleLogout = async () => {
         await signOut({
@@ -32,7 +37,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Desktop Menu */}
-                {!isPending && (
+                {mounted && !isPending && (
                     <ul className="hidden sm:flex flex-row items-center gap-6 list-none">
                         <li className="list-none">
                             <Link href="/events/" className="hover:text-primary transition-colors duration-200 text-sm">Events</Link>
@@ -88,7 +93,7 @@ const Navbar = () => {
                     >
                         Events
                     </Link>
-                    {session?.user?.role === 'admin' && (
+                    {mounted && session?.user?.role === 'admin' && (
                         <Link 
                             href="/admin/events/" 
                             onClick={() => setIsOpen(false)}
@@ -97,7 +102,7 @@ const Navbar = () => {
                             Admin Panel
                         </Link>
                     )}
-                    {session ? (
+                    {mounted && session ? (
                         <button 
                             onClick={handleLogout}
                             className="text-2xl font-medium text-rose-400 hover:text-rose-300 transition-colors duration-200"
@@ -105,13 +110,15 @@ const Navbar = () => {
                             Logout
                         </button>
                     ) : (
-                        <Link 
-                            href="/login/" 
-                            onClick={() => setIsOpen(false)}
-                            className="text-2xl font-medium hover:text-primary transition-colors duration-200"
-                        >
-                            Sign In
-                        </Link>
+                        mounted && (
+                            <Link 
+                                href="/login/" 
+                                onClick={() => setIsOpen(false)}
+                                className="text-2xl font-medium hover:text-primary transition-colors duration-200"
+                            >
+                                Sign In
+                            </Link>
+                        )
                     )}
                 </div>
             </nav>

@@ -14,6 +14,11 @@ const BookingForm = ({ eventId }: BookingFormProps) => {
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
     const [currentPath, setCurrentPath] = useState('');
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         if (session?.user?.email) {
@@ -56,7 +61,7 @@ const BookingForm = ({ eventId }: BookingFormProps) => {
         }
     };
 
-    if (isPending) {
+    if (!mounted || isPending) {
         return (
             <div id="book-event" className="flex items-center justify-center p-6 bg-dark-100 border border-border-dark rounded-[10px]">
                 <p className="text-light-200 text-sm">Checking authentication...</p>
