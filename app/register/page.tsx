@@ -44,20 +44,25 @@ export default function RegisterPage() {
         setLoading(true);
         setError('');
 
-        try {
-            const { error: signUpErr } = await signUp.email({ name, email, password });
-
-            if (signUpErr) {
-                setError(signUpErr.message || 'Failed to register account. Please check details.');
-            } else {
-                setSuccess(true);
+        await signUp.email(
+            {
+                name,
+                email,
+                password,
+                callbackURL: `${window.location.origin}/login`,
+            },
+            {
+                onSuccess: () => {
+                    setSuccess(true);
+                },
+                onError: (ctx) => {
+                    setError(ctx.error.message || 'Failed to register account. Please check details.');
+                    setLoading(false);
+                },
             }
-        } catch (err) {
-            console.error('Registration error:', err);
-            setError('A network error occurred. Please try again.');
-        } finally {
-            setLoading(false);
-        }
+        );
+
+        setLoading(false);
     };
 
     if (success) {

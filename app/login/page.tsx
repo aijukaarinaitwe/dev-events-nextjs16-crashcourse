@@ -36,20 +36,25 @@ function LoginFormContent() {
         setLoading(true);
         setError('');
 
-        try {
-            const { error: signInErr } = await signIn.email({ email, password });
-
-            if (signInErr) {
-                setError(signInErr.message || 'Invalid credentials. Please try again.');
-            } else {
-                setSuccess(true);
+        await signIn.email(
+            {
+                email,
+                password,
+                callbackURL: `${window.location.origin}${redirectUrl}`,
+            },
+            {
+                onSuccess: () => {
+                    setSuccess(true);
+                },
+                onError: (ctx) => {
+                    setError(ctx.error.message || 'Invalid credentials. Please try again.');
+                    setLoading(false);
+                },
             }
-        } catch (err) {
-            console.error('Login error:', err);
-            setError('A network error occurred. Please try again.');
-        } finally {
-            setLoading(false);
-        }
+        );
+
+        // Only runs if the call itself throws (network down, etc.)
+        setLoading(false);
     };
 
     if (success) {
