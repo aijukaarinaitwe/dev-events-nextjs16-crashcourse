@@ -30,6 +30,7 @@ export default function CreateEventPage() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleDrag = (e: React.DragEvent) => {
         e.preventDefault();
@@ -94,6 +95,7 @@ export default function CreateEventPage() {
 
         setLoading(true);
         setError('');
+        setSuccess('');
 
         try {
             // Process tags (comma-separated) and agenda (newline-separated)
@@ -121,7 +123,7 @@ export default function CreateEventPage() {
                 formDataPayload.append('image', imageFile);
             }
 
-            const res = await fetch('/api/events/', {
+            const res = await fetch('/api/events', {
                 method: 'POST',
                 body: formDataPayload
             });
@@ -129,10 +131,14 @@ export default function CreateEventPage() {
             const data = await res.json();
 
             if (res.ok) {
-                // Successful creation, redirect to the newly created event details page
-                router.push(`/events/${data.event.slug}/`);
+                // Successful creation
+                setSuccess('Event created successfully!');
+                // Reset form or redirect after a delay
+                setTimeout(() => {
+                    router.push(`/events/${data.event.slug}`);
+                }, 2000);
             } else {
-                setError(data.message || data.error || 'Failed to create event. Please check inputs.');
+                setError(data.message || 'event creation failed');
             }
         } catch (err) {
             console.error('Error creating event:', err);
@@ -155,6 +161,12 @@ export default function CreateEventPage() {
                     {error && (
                         <div className="p-4 bg-rose-950/30 border border-rose-500/20 text-rose-400 rounded-md text-sm font-semibold">
                             ⚠️ {error}
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="p-4 bg-emerald-950/30 border border-emerald-500/20 text-emerald-400 rounded-md text-sm font-semibold">
+                            ✅ {success}
                         </div>
                     )}
 
