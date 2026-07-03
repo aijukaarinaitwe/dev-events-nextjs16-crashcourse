@@ -18,7 +18,7 @@ export default function RegisterPage() {
     useEffect(() => {
         if (!success) return;
         if (countdown <= 0) {
-            window.location.href = '/login';
+            window.location.href = '/';
             return;
         }
         const t = setTimeout(() => setCountdown((c) => c - 1), 1000);
@@ -49,7 +49,7 @@ export default function RegisterPage() {
                 name,
                 email,
                 password,
-                callbackURL: `${window.location.origin}/login`,
+                callbackURL: `${window.location.origin}/`,
             },
             {
                 onSuccess: () => {
@@ -84,7 +84,7 @@ export default function RegisterPage() {
                             <h1 className="text-3xl text-gradient">Account Created!</h1>
                             <p className="text-light-100 font-medium">Welcome to DevEvent, <span className="text-primary">{name}</span>!</p>
                             <p className="text-light-200 text-sm mt-1">
-                                Your account has been created successfully. Sign in to start booking events.
+                                Your account has been created successfully.
                             </p>
                         </div>
 
@@ -103,15 +103,15 @@ export default function RegisterPage() {
                                 />
                             </div>
                             <p className="text-light-200 text-xs text-center">
-                                Redirecting to sign-in in <span className="text-primary font-semibold">{countdown}s</span>…
+                                Redirecting to home in <span className="text-primary font-semibold">{countdown}s</span>…
                             </p>
                         </div>
 
                         <button
-                            onClick={() => { window.location.href = '/login'; }}
+                            onClick={() => { window.location.href = '/'; }}
                             className="bg-primary hover:bg-primary/90 text-black font-semibold px-8 py-3 rounded-[6px] w-full transition-all duration-200"
                         >
-                            Sign In Now →
+                            Go to Home →
                         </button>
                     </div>
                 </div>

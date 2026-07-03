@@ -15,16 +15,17 @@ function LoginFormContent() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [countdown, setCountdown] = useState(3);
+    const [finalRedirect, setFinalRedirect] = useState(redirectUrl);
 
     useEffect(() => {
         if (!success) return;
         if (countdown <= 0) {
-            window.location.href = redirectUrl;
+            window.location.href = finalRedirect;
             return;
         }
         const t = setTimeout(() => setCountdown((c) => c - 1), 1000);
         return () => clearTimeout(t);
-    }, [success, countdown, redirectUrl]);
+    }, [success, countdown, finalRedirect]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,10 +41,13 @@ function LoginFormContent() {
             {
                 email,
                 password,
-                callbackURL: `${window.location.origin}${redirectUrl}`,
             },
             {
-                onSuccess: () => {
+                onSuccess: (ctx) => {
+                    const isAdmin = ctx.data.user && (ctx.data.user as any).role === 'admin';
+                    if (isAdmin) {
+                        setFinalRedirect('/');
+                    }
                     setSuccess(true);
                 },
                 onError: (ctx) => {
@@ -87,7 +91,7 @@ function LoginFormContent() {
                 </p>
 
                 <button
-                    onClick={() => { window.location.href = redirectUrl; }}
+                    onClick={() => { window.location.href = finalRedirect; }}
                     className="bg-primary hover:bg-primary/90 text-black font-semibold px-6 py-2.5 rounded-[6px] text-sm transition-all duration-200"
                 >
                     Continue now →
