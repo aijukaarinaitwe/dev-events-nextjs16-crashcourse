@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from '@/lib/auth-client';
+import { ThemeToggle } from './ThemeToggle';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ const Navbar = () => {
         <header className="glass sticky top-0 z-50">
             <nav className="flex flex-row justify-between items-center mx-auto container sm:px-10 px-5 py-4">
                 <Link href='/' className="logo flex flex-row items-center gap-2">
-                    <Image src="/icons/logo.png" alt="logo" width={24} height={24} />
+                    <Image src="/icons/logo.png" alt="logo" width={24} height={24} style={{ width: 'auto', height: 'auto' }} />
                     <p className="text-xl font-bold italic max-sm:block text-light-100">DevEvent</p>
                 </Link>
 
@@ -44,6 +45,11 @@ const Navbar = () => {
                         <li className="list-none">
                             <Link href="/events" className="hover:text-primary transition-colors duration-200 text-sm">Events</Link>
                         </li>
+                        {session && (
+                            <li className="list-none">
+                                <Link href="/dashboard" className="hover:text-primary transition-colors duration-200 text-sm">Dashboard</Link>
+                            </li>
+                        )}
                         {session?.user?.role === 'admin' && (
                             <li className="list-none">
                                 <Link href="/admin/events" className="hover:text-primary transition-colors duration-200 text-sm text-primary">Admin Panel</Link>
@@ -79,6 +85,9 @@ const Navbar = () => {
                                 </Link>
                             </li>
                         )}
+                        <li className="list-none">
+                            <ThemeToggle />
+                        </li>
                     </ul>
                 )}
 
@@ -88,14 +97,14 @@ const Navbar = () => {
                     className="flex sm:hidden flex-col justify-center items-center w-8 h-8 relative focus:outline-none z-50"
                     aria-label="Toggle menu"
                 >
-                    <span className={`block absolute h-0.5 w-6 bg-white transform transition duration-300 ease-in-out ${isOpen ? 'rotate-45' : '-translate-y-1.5'}`} />
-                    <span className={`block absolute h-0.5 w-6 bg-white transition duration-300 ease-in-out ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
-                    <span className={`block absolute h-0.5 w-6 bg-white transform transition duration-300 ease-in-out ${isOpen ? '-rotate-45' : 'translate-y-1.5'}`} />
+                    <span className={`block absolute h-0.5 w-6 bg-foreground transform transition duration-300 ease-in-out ${isOpen ? 'rotate-45' : '-translate-y-1.5'}`} />
+                    <span className={`block absolute h-0.5 w-6 bg-foreground transition duration-300 ease-in-out ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
+                    <span className={`block absolute h-0.5 w-6 bg-foreground transform transition duration-300 ease-in-out ${isOpen ? '-rotate-45' : 'translate-y-1.5'}`} />
                 </button>
 
                 {/* Mobile Menu Overlay */}
                 <div
-                    className={`fixed inset-0 z-40 bg-[#030708]/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 transition-all duration-300 ease-in-out sm:hidden ${
+                    className={`fixed inset-0 z-40 bg-background/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 transition-all duration-300 ease-in-out sm:hidden ${
                         isOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-full opacity-0 invisible'
                     }`}
                 >
@@ -106,6 +115,15 @@ const Navbar = () => {
                     >
                         Events
                     </Link>
+                    {mounted && session && (
+                        <Link
+                            href="/dashboard"
+                            onClick={() => setIsOpen(false)}
+                            className="text-2xl font-medium hover:text-primary transition-colors duration-200"
+                        >
+                            Dashboard
+                        </Link>
+                    )}
                     {mounted && session?.user?.role === 'admin' && (
                         <Link
                             href="/admin/events"
@@ -117,6 +135,7 @@ const Navbar = () => {
                     )}
                     {mounted && session ? (
                         <div className="flex flex-col items-center gap-4">
+                            <ThemeToggle />
                             {/* Mobile user avatar */}
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center text-primary font-bold select-none">
@@ -133,13 +152,16 @@ const Navbar = () => {
                         </div>
                     ) : (
                         mounted && (
-                            <Link
-                                href="/login"
-                                onClick={() => setIsOpen(false)}
-                                className="text-2xl font-medium hover:text-primary transition-colors duration-200"
-                            >
-                                Sign In
-                            </Link>
+                            <div className="flex flex-col items-center gap-6">
+                                <ThemeToggle />
+                                <Link
+                                    href="/login"
+                                    onClick={() => setIsOpen(false)}
+                                    className="text-2xl font-medium hover:text-primary transition-colors duration-200"
+                                >
+                                    Sign In
+                                </Link>
+                            </div>
                         )
                     )}
                 </div>

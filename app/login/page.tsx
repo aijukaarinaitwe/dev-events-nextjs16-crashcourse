@@ -46,7 +46,7 @@ function LoginFormContent() {
                 onSuccess: (ctx) => {
                     const isAdmin = ctx.data.user && (ctx.data.user as any).role === 'admin';
                     if (isAdmin) {
-                        setFinalRedirect('/');
+                        setFinalRedirect('/admin/events');
                     }
                     setSuccess(true);
                 },

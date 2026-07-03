@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 interface EditEventFormProps {
@@ -282,10 +283,11 @@ export default function EditEventForm({ event }: EditEventFormProps) {
                     
                     {imagePreview ? (
                         <div className="relative border border-border-dark/50 rounded-[10px] overflow-hidden group">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img 
+                            <Image 
                                 src={imagePreview} 
                                 alt="Upload preview" 
+                                width={800}
+                                height={400}
                                 className="w-full max-h-[300px] object-cover"
                             />
                             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200">

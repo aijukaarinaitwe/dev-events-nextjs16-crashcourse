@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import { auth } from '@/lib/auth';
 import connectDB from '@/database/mongodb';
 import Booking from '@/database/booking.model';
 
@@ -6,11 +8,23 @@ export async function POST(req: NextRequest) {
     try {
         await connectDB();
 
-        const { eventId, email } = await req.json();
+        const session = await auth.api.getSession({
+            headers: await headers(),
+        });
 
-        if (!eventId || !email) {
+        if (!session) {
             return NextResponse.json(
-                { success: false, message: 'Event ID and email are required' },
+                { success: false, message: 'You must be signed in to book an event' },
+                { status: 401 }
+            );
+        }
+
+        const { eventId } = await req.json();
+        const email = session.user.email;
+
+        if (!eventId || typeof eventId !== 'string') {
+            return NextResponse.json(
+                { success: false, message: 'Valid Event ID is required' },
                 { status: 400 }
             );
         }

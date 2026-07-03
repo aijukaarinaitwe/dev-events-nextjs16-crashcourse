@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import LightRays from "@/components/lightrays";
 import Navbar from "@/components/Navbar";
 import { PostHogProvider } from "./providers";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import PageTransition from "@/components/PageTransition";
 
 const geist = Geist({
     subsets: ["latin"],
@@ -28,9 +30,15 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" className={cn("font-sans", geist.variable)}>
+        <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
         {/* 2. Use the exact instance names you defined above */}
         <body className={`${schibstedGrotesk.variable} ${martianMono.variable} min-h-screen antialiased`}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+        >
         <PostHogProvider>
         <Navbar />
 
@@ -53,10 +61,12 @@ export default function RootLayout({
         </div>
 
         <main>
-        {children}
-            </main>
+            <PageTransition>
+                {children}
+            </PageTransition>
+        </main>
         </PostHogProvider>
-
+        </ThemeProvider>
         </body>
         </html>
     );

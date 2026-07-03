@@ -88,13 +88,17 @@ export default async function EventPage({ params }: CustomPageProps) {
 
             <div className="details">
                 <div className="content">
-                    {/* Render banner image using standard img tag to safely support all remote domains (e.g. unsplash) */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        src={event.image}
-                        alt={event.title}
-                        className="banner"
-                    />
+                    {/* Render banner image using Next.js Image for optimization */}
+                    <div className="relative w-full aspect-video rounded-xl overflow-hidden mb-8">
+                        <Image
+                            src={event.image}
+                            alt={event.title}
+                            fill
+                            className="object-cover"
+                            priority
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                        />
+                    </div>
 
                     <div className="flex-col-gap-2">
                         <h2>Overview</h2>
