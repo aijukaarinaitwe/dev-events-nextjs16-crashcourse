@@ -76,7 +76,7 @@ const BookingForm = ({ eventId }: BookingFormProps) => {
                 <p className="text-sm text-light-200">You must have an account to register for this event.</p>
                 <Link 
                     href={`/login?redirect=${encodeURIComponent(currentPath)}`}
-                    className="inline-block bg-primary hover:bg-primary/95 text-black font-semibold px-6 py-2.5 rounded-[6px] transition-all duration-200 text-sm"
+                    className="inline-block bg-primary hover:bg-primary/95 text-primary-foreground font-semibold px-6 py-2.5 rounded-[6px] transition-all duration-200 text-sm"
                 >
                     Sign in to Book Event
                 </Link>

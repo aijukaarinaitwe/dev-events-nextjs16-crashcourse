@@ -79,7 +79,7 @@ const Navbar = () => {
                                 <Link
                                     id="navbar-signin-btn"
                                     href="/login"
-                                    className="bg-primary hover:bg-primary/95 text-black font-semibold px-4 py-2 rounded-[6px] transition-all duration-200 text-xs"
+                                    className="bg-primary hover:bg-primary/95 text-primary-foreground font-semibold px-4 py-2 rounded-[6px] transition-all duration-200 text-xs"
                                 >
                                     Sign In
                                 </Link>

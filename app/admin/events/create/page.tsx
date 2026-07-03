@@ -425,7 +425,7 @@ export default function CreateEventPage() {
                     <button 
                         type="submit"
                         disabled={loading}
-                        className="bg-primary hover:bg-primary/95 text-black w-full font-semibold py-3 rounded-[6px] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-primary hover:bg-primary/95 text-primary-foreground w-full font-semibold py-3 rounded-[6px] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? 'Creating Event & Uploading Banner...' : 'Create Event'}
                     </button>

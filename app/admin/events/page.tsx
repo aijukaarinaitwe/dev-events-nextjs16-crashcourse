@@ -37,7 +37,7 @@ export default async function AdminDashboardPage() {
                 </div>
                 <Link 
                     href="/admin/events/create/" 
-                    className="bg-primary hover:bg-primary/95 text-black font-semibold px-5 py-2.5 rounded-[6px] transition-all duration-200 text-sm"
+                    className="bg-primary hover:bg-primary/95 text-primary-foreground font-semibold px-5 py-2.5 rounded-[6px] transition-all duration-200 text-sm"
                 >
                     + Create Event
                 </Link>
@@ -124,13 +124,13 @@ export default async function AdminDashboardPage() {
                                                     <Link 
                                                         href={`/events/${event.slug}/`}
                                                         target="_blank"
-                                                        className="bg-dark-200 border border-border-dark/60 hover:bg-dark-200 text-light-200 hover:text-light-100 px-3 py-1.5 rounded-[4px] font-semibold text-xs transition-all duration-200"
+                                                        className="bg-secondary border border-border-dark/60 hover:opacity-90 text-secondary-foreground px-3 py-1.5 rounded-[4px] font-semibold text-xs transition-all duration-200"
                                                     >
                                                         View
                                                     </Link>
                                                     <Link 
                                                         href={`/admin/events/${event.slug}/edit/`}
-                                                        className="bg-primary/10 hover:bg-primary text-primary hover:text-black px-3 py-1.5 rounded-[4px] font-semibold text-xs transition-all duration-200"
+                                                        className="bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground px-3 py-1.5 rounded-[4px] font-semibold text-xs transition-all duration-200"
                                                     >
                                                         Edit
                                                     </Link>

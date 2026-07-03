@@ -100,7 +100,7 @@ export default function DashboardPage() {
                 ) : bookings.length === 0 ? (
                     <div className="text-center py-20 bg-dark-100/30 border border-dashed border-border-dark rounded-xl space-y-4">
                         <p className="text-light-200">You haven&apos;t registered for any events yet.</p>
-                        <Link href="/events" className="inline-block bg-primary text-black font-semibold px-6 py-2.5 rounded-[6px] hover:bg-primary/90 transition-all">
+                        <Link href="/events" className="inline-block bg-primary text-primary-foreground font-semibold px-6 py-2.5 rounded-[6px] hover:bg-primary/90 transition-all">
                             Explore Events
                         </Link>
                     </div>
@@ -124,7 +124,7 @@ export default function DashboardPage() {
                                         fill
                                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                                     />
-                                    <div className="absolute top-3 right-3 bg-primary text-black text-[10px] font-bold px-2 py-1 rounded-full">
+                                    <div className="absolute top-3 right-3 bg-primary text-primary-foreground text-[10px] font-bold px-2 py-1 rounded-full">
                                         REGISTERED
                                     </div>
                                 </div>

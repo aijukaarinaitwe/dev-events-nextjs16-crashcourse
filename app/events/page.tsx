@@ -75,7 +75,7 @@ export default async function EventsListPage({ searchParams }: Props) {
                 {isAdmin && (
                     <Link 
                         href="/admin/events/create/" 
-                        className="bg-primary hover:bg-primary/95 text-black px-6 py-3 rounded-[6px] font-semibold transition-all duration-200 shadow-lg hover:shadow-primary/20 hover:scale-[1.02] text-center max-md:w-full"
+                        className="bg-primary hover:bg-primary/95 text-primary-foreground px-6 py-3 rounded-[6px] font-semibold transition-all duration-200 shadow-lg hover:shadow-primary/20 hover:scale-[1.02] text-center max-md:w-full"
                     >
                         Add Event
                     </Link>

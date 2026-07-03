@@ -92,7 +92,7 @@ function LoginFormContent() {
 
                 <button
                     onClick={() => { window.location.href = finalRedirect; }}
-                    className="bg-primary hover:bg-primary/90 text-black font-semibold px-6 py-2.5 rounded-[6px] text-sm transition-all duration-200"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-2.5 rounded-[6px] text-sm transition-all duration-200"
                 >
                     Continue now →
                 </button>
@@ -142,7 +142,7 @@ function LoginFormContent() {
                 type="submit"
                 id="login-submit"
                 disabled={loading}
-                className="bg-primary hover:bg-primary/95 text-black w-full font-semibold py-3 rounded-[6px] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+                className="bg-primary hover:bg-primary/95 text-primary-foreground w-full font-semibold py-3 rounded-[6px] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
             >
                 {loading ? 'Signing In…' : 'Sign In'}
             </button>
