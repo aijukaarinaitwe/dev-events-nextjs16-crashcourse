@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import { headers } from 'next/headers';
-import { auth } from '@/lib/auth';
 import connectDB from '@/database/mongodb';
 import Event from '@/database/event.model';
 import EventCard from '@/components/EventCard';
@@ -46,12 +44,6 @@ export default async function EventsListPage({ searchParams }: Props) {
         filter.date = date;
     }
 
-    // Check if user is admin
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
-    const isAdmin = session?.user?.role === 'admin';
-    
     // Fetch filtered events from the database sorted by date (ascending)
     const dbEvents = await Event.find(filter).sort({ date: 1 });
 
@@ -71,15 +63,12 @@ export default async function EventsListPage({ searchParams }: Props) {
                     <h1 className="text-4xl text-gradient">All Developer Events</h1>
                     <p className="text-light-200 mt-2">Discover meetups, hackathons, and conferences around the globe.</p>
                 </div>
-                {/* Add Event Button - Only visible to admins */}
-                {isAdmin && (
-                    <Link 
-                        href="/admin/events/create/" 
-                        className="bg-primary hover:bg-primary/95 text-primary-foreground px-6 py-3 rounded-[6px] font-semibold transition-all duration-200 shadow-lg hover:shadow-primary/20 hover:scale-[1.02] text-center max-md:w-full"
-                    >
-                        Add Event
-                    </Link>
-                )}
+                <Link
+                    href="/events/create/"
+                    className="bg-primary hover:bg-primary/95 text-primary-foreground px-6 py-3 rounded-[6px] font-semibold transition-all duration-200 shadow-lg hover:shadow-primary/20 hover:scale-[1.02] text-center max-md:w-full"
+                >
+                    Add Event
+                </Link>
             </div>
 
             <Suspense fallback={

@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import CreateEventForm from '@/components/CreateEventForm';
 
@@ -14,8 +12,8 @@ export default function CreateEventPage() {
             <CreateEventForm />
 
             <div className="text-center">
-                <Link href="/admin/events/" className="text-primary hover:underline font-medium">
-                    ← Back to Dashboard
+                <Link href="/events/" className="text-primary hover:underline font-medium">
+                    ← Back to Events
                 </Link>
             </div>
         </section>

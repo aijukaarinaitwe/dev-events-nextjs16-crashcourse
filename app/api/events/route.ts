@@ -2,8 +2,6 @@ import connectDB from "@/database/mongodb";
 import Event from "@/database/event.model";
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from 'cloudinary';
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 
 interface EventDataInput {
     title?: string;
@@ -35,18 +33,6 @@ function parseArray(value: string | string[] | undefined): string[] {
 export async function POST(req: NextRequest) {
     try {
         await connectDB();
-
-        // --- Security check: Only admins can create events ---
-        const session = await auth.api.getSession({
-            headers: await headers(),
-        });
-
-        if (!session || (session.user as any).role !== 'admin') {
-            return NextResponse.json(
-                { message: 'Unauthorized. Only admins can create events.' },
-                { status: 403 }
-            );
-        }
 
         const contentType = req.headers.get("content-type") || "";
         let eventData: EventDataInput = {};

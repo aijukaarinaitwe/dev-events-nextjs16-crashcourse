@@ -12,19 +12,22 @@ export async function POST(req: NextRequest) {
             headers: await headers(),
         });
 
-        if (!session) {
-            return NextResponse.json(
-                { success: false, message: 'You must be signed in to book an event' },
-                { status: 401 }
-            );
-        }
+        const { eventId, email: submittedEmail } = await req.json();
 
-        const { eventId } = await req.json();
-        const email = session.user.email;
+        // Signed-in users book with their account email; anonymous visitors
+        // can register by simply providing an email address.
+        const email = session?.user?.email || submittedEmail;
 
         if (!eventId || typeof eventId !== 'string') {
             return NextResponse.json(
                 { success: false, message: 'Valid Event ID is required' },
+                { status: 400 }
+            );
+        }
+
+        if (!email || typeof email !== 'string') {
+            return NextResponse.json(
+                { success: false, message: 'A valid email address is required' },
                 { status: 400 }
             );
         }

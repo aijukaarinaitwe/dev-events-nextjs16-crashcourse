@@ -78,10 +78,10 @@ const Navbar = () => {
                             <li className="list-none">
                                 <Link
                                     id="navbar-signin-btn"
-                                    href="/login"
+                                    href="/login?admin=true"
                                     className="bg-primary hover:bg-primary/95 text-primary-foreground font-semibold px-4 py-2 rounded-[6px] transition-all duration-200 text-xs"
                                 >
-                                    Sign In
+                                    Admin
                                 </Link>
                             </li>
                         )}
@@ -155,11 +155,11 @@ const Navbar = () => {
                             <div className="flex flex-col items-center gap-6">
                                 <ThemeToggle />
                                 <Link
-                                    href="/login"
+                                    href="/login?admin=true"
                                     onClick={() => setIsOpen(false)}
                                     className="text-2xl font-medium hover:text-primary transition-colors duration-200"
                                 >
-                                    Sign In
+                                    Admin
                                 </Link>
                             </div>
                         )

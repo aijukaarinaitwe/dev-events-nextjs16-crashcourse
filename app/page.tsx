@@ -1,5 +1,6 @@
 'use client';
 
+import Link from "next/link";
 import Explorebtn from "@/components/Explorebtn";
 import EventCard from "@/components/EventCard";
 import {events} from "@/lib/constants";
@@ -39,8 +40,15 @@ const Page = () => {
                     Discover and join the world&apos;s best developer communities.
                 </p>
 
-                <div className="pt-6">
+                <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
                     <Explorebtn />
+                    <Link
+                        href="/events/create/"
+                        id="create-event-btn"
+                        className="bg-primary hover:bg-primary/95 text-primary-foreground font-semibold px-8 py-3.5 rounded-full transition-all duration-200 max-sm:w-full text-center"
+                    >
+                        Create Event
+                    </Link>
                 </div>
             </motion.div>
 
